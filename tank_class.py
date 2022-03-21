@@ -66,5 +66,5 @@ class Bullet:
     def collision(self, obstacles):
         for obstacle in obstacles:
             offset = obstacle.rect.x - self.rect.x, obstacle.rect.y - self.rect.y
-            if self.mask.overlap(obstacle.mask, offset) and obstacle is not Tank:
+            if self.mask.overlap(obstacle.mask, offset) and not isinstance(obstacle,Tank):
                 obstacle.kill()

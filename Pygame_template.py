@@ -19,9 +19,9 @@ car = Car2(pg.image.load('car.png').convert_alpha())
 # создаём танк
 tank = Tank(pg.image.load('tank.png').convert_alpha())
 
-player_sprite = pg.sprite.GroupSingle(tank)
+# player_sprite = pg.sprite.GroupSingle(tank)
 
-visible_sprites.add(square, car)
+visible_sprites.add(square, car, tank)
 bullets = []
 
 while True:
@@ -51,7 +51,7 @@ while True:
         bullet.collision(visible_sprites)
         screen.blit(bullet.image, bullet.rect)
 
-    player_sprite.draw(screen)
+    # player_sprite.draw(screen)
     visible_sprites.draw(screen)
     car.collision(visible_sprites)
     tank.collision(visible_sprites)
