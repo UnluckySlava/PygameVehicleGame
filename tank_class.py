@@ -6,7 +6,6 @@ class Tank(pg.sprite.Sprite):
     pos = pg.math.Vector2(1000,500)
     angle = 0
     speed = 0
-    bullets = []
 
     def __init__(self, image):
         super().__init__()
@@ -49,6 +48,7 @@ class Bullet:
     speed = 10
     image = pg.image.load('bullet.png')
     image = pg.transform.scale(image,(50,50))
+    hit = False
 
     def __init__(self, angle, pos):
         super().__init__()
@@ -68,3 +68,4 @@ class Bullet:
             offset = obstacle.rect.x - self.rect.x, obstacle.rect.y - self.rect.y
             if self.mask.overlap(obstacle.mask, offset) and not isinstance(obstacle,Tank):
                 obstacle.kill()
+                self.hit = True

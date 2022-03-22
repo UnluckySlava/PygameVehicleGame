@@ -23,6 +23,7 @@ tank = Tank(pg.image.load('tank.png').convert_alpha())
 
 visible_sprites.add(square, car, tank)
 bullets = []
+pressed = False
 
 while True:
     for event in pg.event.get():
@@ -33,8 +34,12 @@ while True:
             visible_sprites.add(square, car)
 
         if pg.key.get_pressed()[pg.K_SPACE]:
-            bullet = Bullet(tank.angle,tank.pos)
-            bullets.append(bullet)
+            if not pressed:
+                bullet = Bullet(tank.angle,tank.pos)
+                bullets.append(bullet)
+            pressed = True
+        else:
+            pressed = False
 
     screen.fill('lightgrey')
 
@@ -49,6 +54,8 @@ while True:
     for bullet in bullets:
         bullet.physics()
         bullet.collision(visible_sprites)
+        if (0, 0) > bullet.rect.center or bullet.rect.center > screen_size or bullet.hit:
+            bullets.pop(0)
         screen.blit(bullet.image, bullet.rect)
 
     # player_sprite.draw(screen)
