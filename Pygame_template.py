@@ -8,6 +8,9 @@ screen_size = screen_width, screen_height = 1200, 700
 pg.init()
 screen = pg.display.set_mode(screen_size)
 clock = pg.time.Clock()
+
+player = pg.sprite.GroupSingle()
+enemies = pg.sprite.Group()
 visible_sprites = pg.sprite.Group()
 
 # создаём препятствие
@@ -15,9 +18,11 @@ square = Square()
 
 # создаём машину
 car = Car2(pg.image.load('car.png').convert_alpha())
+car.add(enemies)
 
 # создаём танк
 tank = Tank(pg.image.load('tank.png').convert_alpha())
+tank.add(player)
 
 # player_sprite = pg.sprite.GroupSingle(tank)
 
@@ -47,21 +52,21 @@ while True:
     tank.physics()
     tank.draw()
 
-    car.control()
     car.physics()
     car.draw()
 
     for bullet in bullets:
         bullet.physics()
         bullet.collision(visible_sprites)
-        if (0, 0) > bullet.rect.center or bullet.rect.center > screen_size or bullet.hit:
+        if (0, 0) > bullet.rect.center\
+                or bullet.rect.center > screen_size\
+                or bullet.hit:
             bullets.pop(0)
         screen.blit(bullet.image, bullet.rect)
 
-    # player_sprite.draw(screen)
     visible_sprites.draw(screen)
     car.collision(visible_sprites)
-    tank.collision(visible_sprites)
+    tank.collision(enemies)
 
     pg.display.flip()
     clock.tick(60)

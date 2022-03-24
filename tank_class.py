@@ -1,5 +1,6 @@
 import pygame as pg
 from math import *
+from car_class2 import Car2
 
 class Tank(pg.sprite.Sprite):
 
@@ -67,5 +68,6 @@ class Bullet:
         for obstacle in obstacles:
             offset = obstacle.rect.x - self.rect.x, obstacle.rect.y - self.rect.y
             if self.mask.overlap(obstacle.mask, offset) and not isinstance(obstacle,Tank):
-                obstacle.kill()
+                if isinstance(obstacle, Car2):
+                    obstacle.kill()
                 self.hit = True
