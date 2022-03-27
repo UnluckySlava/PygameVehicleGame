@@ -28,23 +28,20 @@ tank.add(player)
 
 visible_sprites.add(square, car, tank)
 bullets = []
-pressed = False
 
 while True:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
             quit()
-        if pg.key.get_pressed()[pg.K_r]:
-            visible_sprites.add(square, car)
 
-        if pg.key.get_pressed()[pg.K_SPACE]:
-            if not pressed:
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_r:
+                visible_sprites.add(square, car)
+
+            if event.key == pg.K_SPACE:
                 bullet = Bullet(tank.angle,tank.pos)
                 bullets.append(bullet)
-            pressed = True
-        else:
-            pressed = False
 
     screen.fill('lightgrey')
 
