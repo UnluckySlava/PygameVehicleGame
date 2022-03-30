@@ -1,7 +1,10 @@
 import pygame as pg
 from math import *
 
-class Car2(pg.sprite.Sprite):
+class Enemy(pg.sprite.Sprite):
+    pass
+
+class Car2(Enemy):
 
     pos = pg.math.Vector2(600,450)
     angle = 0
@@ -33,12 +36,12 @@ class Car2(pg.sprite.Sprite):
         self.pos.x %= 1200
         self.pos.y %= 700
 
-    def draw(self):
+    def update(self):
         self.image = pg.transform.rotate(self.orig_image, degrees(self.angle))
         self.mask = pg.mask.from_surface(self.image)
 
     def collision(self, obstacles):
         for obstacle in obstacles:
             offset = obstacle.rect.x - self.rect.x, obstacle.rect.y - self.rect.y
-            if self.mask.overlap(obstacle.mask, offset) and obstacle is not self:
+            if self.mask.overlap(obstacle.mask, offset) and not isinstance(obstacle, Car2):
                 pass

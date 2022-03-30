@@ -1,6 +1,6 @@
 import pygame as pg
 from math import *
-from car_class2 import Car2
+from car_class2 import Enemy
 
 class Tank(pg.sprite.Sprite):
 
@@ -34,7 +34,7 @@ class Tank(pg.sprite.Sprite):
         self.pos.x %= 1200
         self.pos.y %= 700
 
-    def draw(self):
+    def update(self):
         self.image = pg.transform.rotate(self.orig_image, degrees(self.angle))
         self.mask = pg.mask.from_surface(self.image)
 
@@ -62,12 +62,12 @@ class Bullet:
     def physics(self):
         self.pos.x -= self.speed * sin(self.angle)
         self.pos.y -= self.speed * cos(self.angle)
-        self.rect.center = self.pos - self.image.get_rect().center
+        self.rect.center = self.pos
 
     def collision(self, obstacles):
         for obstacle in obstacles:
             offset = obstacle.rect.x - self.rect.x, obstacle.rect.y - self.rect.y
             if self.mask.overlap(obstacle.mask, offset) and not isinstance(obstacle,Tank):
-                if isinstance(obstacle, Car2):
+                if isinstance(obstacle, Enemy):
                     obstacle.kill()
                 self.hit = True
